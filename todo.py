@@ -2,6 +2,8 @@ from flask import Flask, session, flash, render_template, url_for, redirect, req
 
 from uuid import uuid4
 
+import os
+
 from functools import wraps
 
 from werkzeug.exceptions import NotFound
@@ -156,4 +158,7 @@ def update_list(lst, list_id):
     return redirect(url_for('get_lists'))
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5003)
+    if os.environ.get('FLASK_ENV') == 'production':
+        app.run(debug=False)
+    else:
+        app.run(debug=True, port=5003)
